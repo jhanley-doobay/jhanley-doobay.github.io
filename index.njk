@@ -1,0 +1,50 @@
+---
+layout: layouts/base.njk
+title: "jhanley-doobay"
+github_url: "https://github.com/hanleyjames"
+---
+
+<!-- ABOUT SECTION -->
+<section id="about" class="section">
+  <h2>About Me</h2>
+  <div class="about-content">
+    <p class="about-name">{{ about.name }}</p>
+    <p class="about-title">{{ about.title }}</p>
+    <p class="about-bio">{{ about.bio }}</p>
+    <p class="about-location">📍 {{ about.location }}</p>
+  </div>
+</section>
+
+<!-- CV TIMELINE SECTION -->
+<section id="cv" class="section">
+  <h2>Experience</h2>
+  <div class="timeline">
+    {% for job in cv %}
+    <div class="timeline-item">
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <div class="timeline-header" onclick="toggleJob(this)">
+          {% if job.logo %}<img src="{{ job.logo }}" class="company-logo" alt="{{ job.company }} logo" />{% endif %}
+          <div class="timeline-company">
+            <span class="company-name">
+              {% if job.url %}<a href="{{ job.url }}" target="_blank" rel="noopener" onclick="event.stopPropagation()">{% endif %}
+              {{ job.company }}
+              {% if job.url %}</a>{% endif %}
+            </span>
+            <span class="timeline-date">{{ job.start }}{% if job.end %} — {{ job.end }}{% endif %}</span>
+          </div>
+          <span class="company-role">{{ job.role }}</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="timeline-details">
+          <ul class="accomplishments">
+            {% for item in job.accomplishments %}
+            <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>

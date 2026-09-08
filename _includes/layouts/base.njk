@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title or 'My Eleventy Site' }}</title>
+  <style>
+    /* Basic reset & layout */
+    body { margin: 0; font-family: system-ui, sans-serif; display: flex; flex-direction: column; min-height: 100vh; background-color: #0d1117; color: #c9d1d9; }
+    header { background: #1a1a1a; color: white; padding: 1rem; }
+    header nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 1rem; }
+    header nav a { color: #fff; text-decoration: none; font-weight: 500; }
+    header nav a:hover { text-decoration: underline; }
+    main { flex: 1; padding: 2rem; max-width: 800px; margin: 0 auto; color: #c9d1d9; }
+    footer a:hover { text-decoration: underline; }
+
+    /* Sections */
+    .section { margin-bottom: 3rem; }
+    .section h2 { font-size: 1.75rem; margin-bottom: 1.5rem; color: #f0f6fc; border-bottom: 1px solid #30363d; padding-bottom: 0.5rem; }
+
+    /* About */
+    .about-content { line-height: 1.7; }
+    .about-name { font-size: 1.25rem; font-weight: 600; color: #f0f6fc; margin: 0; }
+    .about-title { color: #58a6ff; margin: 0.25rem 0 0.75rem; }
+    .about-bio { margin: 0 0 0.5rem; }
+    .about-location { color: #8b949e; font-size: 0.9rem; margin: 0; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #30363d; }
+    .timeline-item { position: relative; margin-bottom: 1.5rem; }
+    .timeline-marker { position: absolute; left: -2rem; top: 0.6rem; width: 14px; height: 14px; border-radius: 50%; background: #58a6ff; border: 2px solid #0d1117; margin-left: -6px; transform: translateX(1px); }
+    .timeline-content { background: #161b22; border: 1px solid #30363d; border-radius: 6px; overflow: hidden; }
+    .timeline-header { display: flex; align-items: center; padding: 1rem; cursor: pointer; gap: 0.75rem; flex-wrap: wrap; transition: background 0.2s; }
+    .timeline-header:hover { background: #1c2128; }
+    .timeline-date { font-size: 0.8rem; color: #8b949e; white-space: nowrap; }
+    .timeline-company { display: flex; flex-direction: column; gap: 2px; }
+    .company-logo { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .company-name { font-weight: 600; color: #f0f6fc; }
+    .company-name a { color: #58a6ff; text-decoration: none; }
+    .company-name a:hover { text-decoration: underline; }
+    .company-role { font-size: 0.85rem; color: #8b949e; flex-shrink: 0; margin-left: auto; }
+    .toggle-icon { font-size: 0.7rem; color: #8b949e; transition: transform 0.3s; }
+    .timeline-header.expanded .toggle-icon { transform: rotate(180deg); }
+    .timeline-details { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .timeline-details.open { max-height: 500px; }
+    .accomplishments { list-style: none; padding: 0 1rem 1rem; margin: 0; }
+    .accomplishments li { position: relative; padding-left: 1.2rem; margin-bottom: 0.5rem; color: #c9d1d9; line-height: 1.5; }
+    .accomplishments li::before { content: '▸'; position: absolute; left: 0; color: #58a6ff; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        {% if page.url == "/" %}
+          <li><a href="/">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#cv">Experience</a></li>
+        {% elif collections.posts and collections.posts.length > 0 %}
+          {% for post in collections.posts | reverse %}
+            <li><a href="{{ post.url }}">{{ post.data.title or 'Untitled Post' }}</a></li>
+          {% endfor %}
+        {% else %}
+          <li><a href="/">Home</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    {% if page.url == "/" %}
+    <img src="images/header.jpg" alt="Header" style="width: 100vw; margin-left: calc(-50vw + 50%); height: 400px; object-fit: cover; display: block;" />
+    <h1>{{ title }}</h1>
+    {% endif %}
+    {{ content | safe }}
+  </main>
+
+  <footer>
+    <p>🐙 Github stuff: <a href="{{ github_url or 'https://github.com/hanleyjames' }}" target="_blank" rel="noopener">{{ github_url or 'GitHub Repository' }}</a></p>
+  </footer>
+
+  <script>
+    function toggleJob(header) {
+      const details = header.nextElementSibling;
+      const isOpen = details.classList.contains('open');
+      details.classList.toggle('open');
+      header.classList.toggle('expanded');
+    }
+  </script>
+</body>
+</html>

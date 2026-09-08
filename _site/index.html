@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jhanley-doobay</title>
+  <style>
+    /* Basic reset & layout */
+    body { margin: 0; font-family: system-ui, sans-serif; display: flex; flex-direction: column; min-height: 100vh; background-color: #0d1117; color: #c9d1d9; }
+    header { background: #1a1a1a; color: white; padding: 1rem; }
+    header nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 1rem; }
+    header nav a { color: #fff; text-decoration: none; font-weight: 500; }
+    header nav a:hover { text-decoration: underline; }
+    main { flex: 1; padding: 2rem; max-width: 800px; margin: 0 auto; color: #c9d1d9; }
+    footer a:hover { text-decoration: underline; }
+
+    /* Sections */
+    .section { margin-bottom: 3rem; }
+    .section h2 { font-size: 1.75rem; margin-bottom: 1.5rem; color: #f0f6fc; border-bottom: 1px solid #30363d; padding-bottom: 0.5rem; }
+
+    /* About */
+    .about-content { line-height: 1.7; }
+    .about-name { font-size: 1.25rem; font-weight: 600; color: #f0f6fc; margin: 0; }
+    .about-title { color: #58a6ff; margin: 0.25rem 0 0.75rem; }
+    .about-bio { margin: 0 0 0.5rem; }
+    .about-location { color: #8b949e; font-size: 0.9rem; margin: 0; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #30363d; }
+    .timeline-item { position: relative; margin-bottom: 1.5rem; }
+    .timeline-marker { position: absolute; left: -2rem; top: 0.6rem; width: 14px; height: 14px; border-radius: 50%; background: #58a6ff; border: 2px solid #0d1117; margin-left: -6px; transform: translateX(1px); }
+    .timeline-content { background: #161b22; border: 1px solid #30363d; border-radius: 6px; overflow: hidden; }
+    .timeline-header { display: flex; align-items: center; padding: 1rem; cursor: pointer; gap: 0.75rem; flex-wrap: wrap; transition: background 0.2s; }
+    .timeline-header:hover { background: #1c2128; }
+    .timeline-date { font-size: 0.8rem; color: #8b949e; white-space: nowrap; }
+    .timeline-company { display: flex; flex-direction: column; gap: 2px; }
+    .company-logo { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+    .company-name { font-weight: 600; color: #f0f6fc; }
+    .company-name a { color: #58a6ff; text-decoration: none; }
+    .company-name a:hover { text-decoration: underline; }
+    .company-role { font-size: 0.85rem; color: #8b949e; flex-shrink: 0; margin-left: auto; }
+    .toggle-icon { font-size: 0.7rem; color: #8b949e; transition: transform 0.3s; }
+    .timeline-header.expanded .toggle-icon { transform: rotate(180deg); }
+    .timeline-details { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .timeline-details.open { max-height: 500px; }
+    .accomplishments { list-style: none; padding: 0 1rem 1rem; margin: 0; }
+    .accomplishments li { position: relative; padding-left: 1.2rem; margin-bottom: 0.5rem; color: #c9d1d9; line-height: 1.5; }
+    .accomplishments li::before { content: '▸'; position: absolute; left: 0; color: #58a6ff; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#cv">Experience</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    
+    <img src="images/header.jpg" alt="Header" style="width: 100vw; margin-left: calc(-50vw + 50%); height: 400px; object-fit: cover; display: block;" />
+    <h1>jhanley-doobay</h1>
+    
+    
+<!-- ABOUT SECTION -->
+<section id="about" class="section">
+  <h2>About Me</h2>
+  <div class="about-content">
+    <p class="about-name">James Hanley</p>
+    <p class="about-title">Software Engineer</p>
+    <p class="about-bio">Software Engineer and Consultant, 8+ years. I am professionally focused on .Net, SSIS, Node.js &amp; Typescript; academically focused on Python and Java. Currently finishing up a B.S. in Computer Science. I read Philosophy, Political Theory, Sci-fi and Horror in my spare time.</p>
+    <p class="about-location">📍 Upstate NY, United States</p>
+  </div>
+</section>
+
+<!-- CV TIMELINE SECTION -->
+<section id="cv" class="section">
+  <h2>Experience</h2>
+  <div class="timeline">
+    
+    <div class="timeline-item">
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <div class="timeline-header" onclick="toggleJob(this)">
+          <img src="images/cv/excellusbcbs_logo.jpeg" class="company-logo" alt="Excellus BCBS logo" />
+          <div class="timeline-company">
+            <span class="company-name">
+              <a href="https://www.excellusbcbs.com" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              Excellus BCBS
+              </a>
+            </span>
+            <span class="timeline-date">June 2024 — Present</span>
+          </div>
+          <span class="company-role">Software Engineer</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="timeline-details">
+          <ul class="accomplishments">
+            
+            <li>Led migration of legacy monolith to microservices, reducing deployment time by 70%</li>
+            
+            <li>Mentored 4 junior developers through structured code review and pairing sessions</li>
+            
+            <li>Designed and implemented real-time notification system serving 50k+ daily active users</li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <div class="timeline-header" onclick="toggleJob(this)">
+          
+          <div class="timeline-company">
+            <span class="company-name">
+              <a href="https://github.com/jhanley-doobay" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              Doobay L.L.C.
+              </a>
+            </span>
+            <span class="timeline-date">November 2024 — Present</span>
+          </div>
+          <span class="company-role">Founder</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="timeline-details">
+          <ul class="accomplishments">
+            
+            <li>Software Consultation for MediaNews Group. Manage and update finanical email alert system. Upgrade core library, migrating away from MikroORM to Knex.js. Improve reliability and metrics for internal AdTech financial system.</li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <div class="timeline-header" onclick="toggleJob(this)">
+          <img src="images/cv/dolby_logo.jpeg" class="company-logo" alt="Dolby Laboratories logo" />
+          <div class="timeline-company">
+            <span class="company-name">
+              <a href="https://www.dolby.com" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              Dolby Laboratories
+              </a>
+            </span>
+            <span class="timeline-date">August 2022 — June 2024</span>
+          </div>
+          <span class="company-role">Software Engineer</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="timeline-details">
+          <ul class="accomplishments">
+            
+            <li>Updating and creating new functions to improve performance, readability and maintainability of legacy .Net applications.</li>
+            
+            <li>Develop and deploy new changes based around urgent legal requirements on legacy T-SQL tables and stored procedures.</li>
+            
+            <li>Helping in the process to modernize critical parts of the application using Powerapps, Power automate Flow, .Net Core and ORMS (EFC, Dapper).</li>
+            
+            <li>Have ownership over and helped finish a Functional React application using FP-TS, MS Sharepoint and modifying an older libraries to help create a portal for various clients and lawyers. The application allows users and lawyers to upload patent pool data based on the patent pool via xlsx or manual data entry.</li>
+            
+            <li>I own and helped finished an administration panel that allows lawyers and devs to modify patent pools, columns, formulas and error management for current and new patent pools platform. These two solutions combined replace a prior legacy application, making it easier for non-mpegla clients to interface with our platform.</li>
+            
+            <li>Overhaul Bilateral Trade Agreements sections on Legacy Software. Modify Tax exemption logic for Bilateral Trade Agreements based on Licensees and Licensors combinations. Update Disclosure Options, Unit Caps, Pending and other settings with Stored Procedures and Telerik/kendo UI updates. Add spreadsheet export options to multiple pages based on Bilateral Trade Agreement Data. Allow Bulk Delete and Update of Reporting Items as well as history tracking of deletion using Telerik, Javascript, TSQL  and .Net.</li>
+            
+            <li>Update history tracking on Adhoc Redirection items with TSQL and .Net Controller/Router to allow users to track changes on multiple levels of the application.</li>
+            
+            <li>Fix Settlement Statement Report Generation emails, BLA tax emails and Cover Letter Reports.</li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <div class="timeline-header" onclick="toggleJob(this)">
+          <img src="images/cv/medianews_group__logo.jpeg" class="company-logo" alt="MediaNews Group logo" />
+          <div class="timeline-company">
+            <span class="company-name">
+              <a href="https://www.medianewsgroup.com" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              MediaNews Group
+              </a>
+            </span>
+            <span class="timeline-date">September 2021 — June 2023</span>
+          </div>
+          <span class="company-role">Software Engineer</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="timeline-details">
+          <ul class="accomplishments">
+            
+            <li>Rewrote depreciated Wordpress application in NodeJS using google-ads-api to generate keywords, cpc, and other metrics for internal Marketing Ads team. This tool is currently in use across multiple organizations. The tool uses Web Components, Lit, google-ads-api, and React.</li>
+            
+            <li>Rewrote and optimized the API to manage keyword generation, consistent chart generation, and PDF generation for the react application.</li>
+            
+            <li>Helped in the planning and debugging of R service that is used to calculate ad costs and their monthly rollover budgets. This is used to make sure that our Ads Team does not overspend any ads budgets on Facebook, Microsoft/Bing, Google and Snapchat. Helped reduce costs by migrating the R code to NodeJS saving the company ~$10k+ per year.</li>
+            
+            <li>Helped migrate a large portion of the legacy services our team used from on-prem to AWS. Projects use CodeBuild, Docker, S3, Lambda Functions and Step Functions.</li>
+            
+            <li>Helped move the majority of our builds from CircleCI to Github Actions to help reduce costs and streamline commits and version control.</li>
+            
+            <li>Developed and deployed software to notify employees on their performance for ad cycles from various Ad platforms with Node.js hosted on AWS as a part of a step function that imports ad revenue metrics. This notification system allows employees to receive critical updates, saving the company money and building our clients trust in case there are any issues in calculations.</li>
+            
+            <li>Worked with the team to build a set of tools in Typescript that managed campaign budgets across multiple ad platforms. This allows our team to seamlessly manage ad budgets all on one platform.</li>
+            
+            <li>Developed SystemD services for managing and sending alerts around sets of legacy applications to slack channels for the team to catch time sensitive errors.</li>
+            
+            <li>Primary writer of all current onboarding, system and troubleshooting documentation.</li>
+            
+            <li>Owner of interview project for new hires.</li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <div class="timeline-header" onclick="toggleJob(this)">
+          
+          <div class="timeline-company">
+            <span class="company-name">
+              
+              Raves Entertainment LLC
+              
+            </span>
+            <span class="timeline-date">January 2020 — May 2023</span>
+          </div>
+          <span class="company-role">Software Engineer, Full and Part-time</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="timeline-details">
+          <ul class="accomplishments">
+            
+            <li>Developed and implemented a MERN stack site.</li>
+            
+            <li>Project includes setting up CD/CI, setting up and deploying Production and Testing environments, developing and implementing User Authentication with blog setup.</li>
+            
+            <li>Mentored and helped new bootcamp grads get practical experience in gaps that they might have after bootcamps.</li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <div class="timeline-header" onclick="toggleJob(this)">
+          <img src="images/cv/microsoft_logo.jpeg" class="company-logo" alt="Microsoft logo" />
+          <div class="timeline-company">
+            <span class="company-name">
+              <a href="https://example.com" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              Microsoft
+              </a>
+            </span>
+            <span class="timeline-date">June 2019 — August 2020</span>
+          </div>
+          <span class="company-role">Software Engineer, Contract</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="timeline-details">
+          <ul class="accomplishments">
+            
+            <li>Developed MSFlow/Power Automate project to re enqueue failed billing data from a Kusto Cluster back into their TSQL Database. Deployed and in use by CCM Team.</li>
+            
+            <li>Developed and deployed DocFX projects for CCM’s internal projects, improving documentation across the org.</li>
+            
+            <li>Developed a POC with Azure Synapse. The scope was to explore Query as a Service option to reduce query times. The project uses Synapse, ADF, Spark, T-SQL, and Kusto. The project implemented new features that allowed for querying over non-structured object storage (ADLS gen2).</li>
+            
+            <li>Retired Microsoft Services and Worker roles. Created WebJobs that are deployed for use in Azure’s public-facing website. Deployed on Azure Cloud Platform and in use as part of the Cloud Cost Management Team.</li>
+            
+            <li>Developed and deployed custom dashboards and WIQL queries for teams on Microsoft projects. Created Power BI Dashboard for Azure Dev Ops, tracking employee work items, sprints, burndown, and overestimated Items. The project was deployed and is in use by the Microsoft team’s morning shiproom.</li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <div class="timeline-header" onclick="toggleJob(this)">
+          <img src="images/cv/2u_logo.jpeg" class="company-logo" alt="2U logo" />
+          <div class="timeline-company">
+            <span class="company-name">
+              <a href="https://2u.com" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              2U
+              </a>
+            </span>
+            <span class="timeline-date">April 2019 — July 2019</span>
+          </div>
+          <span class="company-role">Substitute Teaching Assistant at UW University Coding Bootcamp, Contract</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="timeline-details">
+          <ul class="accomplishments">
+            
+            <li>Assist students in learning MERN stack skills.</li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <div class="timeline-header" onclick="toggleJob(this)">
+          <img src="images/cv/dtoor_logo.jpeg" class="company-logo" alt="dTOOR logo" />
+          <div class="timeline-company">
+            <span class="company-name">
+              <a href="https://dtoor.com" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              dTOOR
+              </a>
+            </span>
+            <span class="timeline-date">October 2018 — December 2018</span>
+          </div>
+          <span class="company-role">Intern Software Engineer</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="timeline-details">
+          <ul class="accomplishments">
+            
+            <li>Developed projects with Node.js, Javascript, Angular 7, PHP and SQL.</li>
+            
+            <li>Implemented a public driven opinion development cycles.</li>
+            
+            <li>Deployed projects on Heroku and Wordpress.</li>
+            
+            <li>Developed a headless CMS with MongoDB.</li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        <div class="timeline-header" onclick="toggleJob(this)">
+          <img src="images/cv/terra_staffing_group_logo.jpeg" class="company-logo" alt="Verstela logo" />
+          <div class="timeline-company">
+            <span class="company-name">
+              <a href="https://example.com" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              Verstela
+              </a>
+            </span>
+            <span class="timeline-date">January 2018 — June 2018</span>
+          </div>
+          <span class="company-role">Laboratory Technician &amp; Network Engineer, Contract</span>
+          <span class="toggle-icon">▼</span>
+        </div>
+        <div class="timeline-details">
+          <ul class="accomplishments">
+            
+            <li>Provide logistics and server migration support across Microsoft Campuses.</li>
+            
+            <li>Managed the installation, organization, and labeling of network and power cabling across multiple data center racks at Microsoft&#39;s Redmond Ridge 1 Data Center.</li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+  </main>
+
+  <footer>
+    <p>🐙 Github stuff: <a href="https://github.com/hanleyjames" target="_blank" rel="noopener">https://github.com/hanleyjames</a></p>
+  </footer>
+
+  <script>
+    function toggleJob(header) {
+      const details = header.nextElementSibling;
+      const isOpen = details.classList.contains('open');
+      details.classList.toggle('open');
+      header.classList.toggle('expanded');
+    }
+  </script>
+</body>
+</html>
