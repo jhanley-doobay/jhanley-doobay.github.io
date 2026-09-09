@@ -29,8 +29,10 @@
     .timeline { position: relative; padding-left: 2rem; }
     .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #30363d; }
     .timeline-item { position: relative; margin-bottom: 1.5rem; }
-    .timeline-marker { position: absolute; left: -2rem; top: 0.6rem; width: 14px; height: 14px; border-radius: 50%; background: #58a6ff; border: 2px solid #0d1117; margin-left: -6px; transform: translateX(1px); }
-    .timeline-content { background: #161b22; border: 1px solid #30363d; border-radius: 6px; overflow: hidden; }
+    .timeline-marker { position: absolute; left: -2rem; top: 0.6rem; width: 14px; height: 14px; border-radius: 50%; background: #58a6ff; border: 2px solid #0d1117; margin-left: -6px; transform: translateX(1px); transition: background 0.3s, box-shadow 0.3s; }
+    .timeline-marker.active { background: #FF6EC7; animation: fireflyGlow var(--glow-duration, 2s) ease-in-out infinite var(--glow-delay, 0s); }
+    .timeline-content { background: #161b22; border: 1px solid #30363d; border-radius: 6px; overflow: hidden; transition: box-shadow 0.3s; }
+    .timeline-content:hover { animation: cardGlow var(--glow-duration, 2s) ease-in-out infinite var(--glow-delay, 0s); }
     .timeline-header { display: flex; align-items: center; padding: 1rem; cursor: pointer; gap: 0.75rem; flex-wrap: wrap; transition: background 0.2s; }
     .timeline-header:hover { background: #1c2128; }
     .timeline-date { font-size: 0.8rem; color: #8b949e; white-space: nowrap; }
@@ -42,6 +44,14 @@
     .company-role { font-size: 0.85rem; color: #8b949e; flex-shrink: 0; margin-left: auto; }
     .toggle-icon { font-size: 0.7rem; color: #8b949e; transition: transform 0.3s; }
     .timeline-header.expanded .toggle-icon { transform: rotate(180deg); }
+    @keyframes cardGlow {
+      0%, 100% { box-shadow: 0 0 8px rgba(255, 110, 199, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(255, 110, 199, 0.6), 0 0 40px rgba(255, 110, 199, 0.2); }
+    }
+    @keyframes fireflyGlow {
+      0%, 100% { box-shadow: 0 0 5px rgba(255, 110, 199, 0.5); }
+      50% { box-shadow: 0 0 15px rgba(255, 110, 199, 0.9), 0 0 30px rgba(255, 110, 199, 0.4); }
+    }
     .timeline-details { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
     .timeline-details.open { max-height: 500px; }
     .accomplishments { list-style: none; padding: 0 1rem 1rem; margin: 0; }
@@ -111,9 +121,10 @@
   <script>
     function toggleJob(header) {
       const details = header.nextElementSibling;
-      const isOpen = details.classList.contains('open');
+      const marker = header.parentElement.previousElementSibling;
       details.classList.toggle('open');
       header.classList.toggle('expanded');
+      marker.classList.toggle('active');
     }
 
     function makeItRain() {
@@ -137,7 +148,22 @@
       container.innerHTML = drops;
     }
 
-    document.addEventListener('DOMContentLoaded', makeItRain);
+    document.addEventListener('DOMContentLoaded', function() {
+      makeItRain();
+
+      var cards = document.querySelectorAll('.timeline-content');
+      cards.forEach(function(card) {
+        var duration = (1.5 + Math.random() * 2).toFixed(2);
+        var delay = (Math.random() * 2).toFixed(2);
+        card.style.setProperty('--glow-duration', duration + 's');
+        card.style.setProperty('--glow-delay', delay + 's');
+        var marker = card.previousElementSibling;
+        if (marker) {
+          marker.style.setProperty('--glow-duration', duration + 's');
+          marker.style.setProperty('--glow-delay', delay + 's');
+        }
+      });
+    });
   </script>
 </body>
 </html>
