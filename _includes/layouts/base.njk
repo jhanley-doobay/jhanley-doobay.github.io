@@ -47,6 +47,31 @@
     .accomplishments { list-style: none; padding: 0 1rem 1rem; margin: 0; }
     .accomplishments li { position: relative; padding-left: 1.2rem; margin-bottom: 0.5rem; color: #c9d1d9; line-height: 1.5; }
     .accomplishments li::before { content: '▸'; position: absolute; left: 0; color: #58a6ff; }
+
+    /* Hero Rain */
+    .hero-container { position: relative; overflow: hidden; width: 100vw; margin-left: calc(-50vw + 50%); }
+    .hero-container img { width: 100%; height: 400px; object-fit: cover; display: block; }
+    .rain-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+    .rain-drop { position: absolute; bottom: 100%; width: 30px; height: 140px; pointer-events: none; animation: drop 0.5s linear infinite; }
+    @keyframes drop {
+      0% { transform: translateY(0); }
+      75% { transform: translateY(400px); }
+      100% { transform: translateY(400px); }
+    }
+    .rain-stem { width: 5px; height: 60%; margin-left: 12px; background: linear-gradient(to bottom, rgba(255, 110, 199, 0), rgba(255, 110, 199, 0.45)); animation: stem 0.5s linear infinite; }
+    @keyframes stem {
+      0% { opacity: 1; }
+      65% { opacity: 1; }
+      75% { opacity: 0; }
+      100% { opacity: 0; }
+    }
+    .rain-splat { width: 30px; height: 20px; border-top: 4px dotted rgba(255, 110, 199, 0.7); border-radius: 50%; opacity: 1; transform: scale(0); animation: splat 0.5s linear infinite; }
+    @keyframes splat {
+      0% { opacity: 1; transform: scale(0); }
+      80% { opacity: 1; transform: scale(0); }
+      90% { opacity: 0.5; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.5); }
+    }
   </style>
 </head>
 <body>
@@ -70,7 +95,10 @@
 
   <main>
     {% if page.url == "/" %}
-    <img src="images/header.jpg" alt="Header" style="width: 100vw; margin-left: calc(-50vw + 50%); height: 400px; object-fit: cover; display: block;" />
+    <div class="hero-container">
+      <img src="images/header.jpg" alt="Header" />
+      <div class="rain-container"></div>
+    </div>
     <h1>{{ title }}</h1>
     {% endif %}
     {{ content | safe }}
@@ -87,6 +115,29 @@
       details.classList.toggle('open');
       header.classList.toggle('expanded');
     }
+
+    function makeItRain() {
+      var container = document.querySelector('.rain-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      var increment = 0;
+      var drops = '';
+
+      while (increment < 100) {
+        var randoHundo = Math.floor(Math.random() * 98 + 1);
+        var randoFiver = Math.floor(Math.random() * 4 + 2);
+        increment += randoFiver;
+        var bottomPos = randoFiver + randoFiver - 1 + 100;
+        var delay = '0.' + randoHundo + 's';
+        var duration = '0.5' + randoHundo + 's';
+        drops += '<div class="rain-drop" style="left:' + increment + '%;bottom:' + bottomPos + '%;animation-delay:' + delay + ';animation-duration:' + duration + ';"><div class="rain-stem" style="animation-delay:' + delay + ';animation-duration:' + duration + ';"></div><div class="rain-splat" style="animation-delay:' + delay + ';animation-duration:' + duration + ';"></div></div>';
+      }
+
+      container.innerHTML = drops;
+    }
+
+    document.addEventListener('DOMContentLoaded', makeItRain);
   </script>
 </body>
 </html>
