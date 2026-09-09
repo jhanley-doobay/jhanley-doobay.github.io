@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>jhanley-doobay</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <style>
     /* Basic reset & layout */
     body { margin: 0; font-family: system-ui, sans-serif; display: flex; flex-direction: column; min-height: 100vh; background-color: #0d1117; color: #c9d1d9; }
@@ -82,6 +83,24 @@
       90% { opacity: 0.5; transform: scale(1); }
       100% { opacity: 0; transform: scale(1.5); }
     }
+
+    /* Books */
+    .chart-container { position: relative; height: 250px; margin-bottom: 2rem; }
+    .books-year { margin-bottom: 1.5rem; }
+    .books-year-title { font-size: 1.25rem; font-weight: 600; color: #f0f6fc; margin-bottom: 0.75rem; }
+    .books-month { margin-bottom: 0.75rem; }
+    .books-month-header { display: flex; align-items: center; padding: 0.75rem 1rem; background: #161b22; border: 1px solid #30363d; border-radius: 6px; cursor: pointer; gap: 0.75rem; transition: background 0.2s; }
+    .books-month-header:hover { background: #1c2128; }
+    .books-month-name { font-weight: 600; color: #FF6EC7; }
+    .books-month-count { font-size: 0.85rem; color: #8b949e; }
+    .books-month-toggle { font-size: 0.7rem; color: #8b949e; margin-left: auto; transition: transform 0.3s; }
+    .books-month-header.expanded .books-month-toggle { transform: rotate(180deg); }
+    .books-month-details { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .books-month-details.open { max-height: 800px; }
+    .book-card { background: #161b22; border: 1px solid #30363d; border-left: 3px solid #FF6EC7; border-radius: 4px; padding: 1rem; margin: 0.5rem 0; }
+    .book-title { font-weight: 600; color: #f0f6fc; margin: 0; }
+    .book-author { font-size: 0.9rem; color: #8b949e; margin: 0.25rem 0; }
+    .book-notes { font-size: 0.9rem; color: #c9d1d9; line-height: 1.6; margin: 0.5rem 0 0; padding: 0.5rem; background: #0d1117; border-radius: 4px; }
   </style>
 </head>
 <body>
@@ -92,6 +111,7 @@
           <li><a href="/">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#cv">Experience</a></li>
+          <li><a href="#books">Books</a></li>
         
       </ul>
     </nav>
@@ -415,6 +435,16 @@
   </div>
 </section>
 
+<!-- BOOKS SECTION -->
+<section id="books" class="section">
+  <h2>Books Read</h2>
+  <div class="chart-container">
+    <canvas id="booksChart"></canvas>
+  </div>
+  <div id="booksList"></div>
+  <script>const booksData = [{&quot;title&quot;:&quot;Placeholder Book One&quot;,&quot;author&quot;:&quot;Author Name&quot;,&quot;year&quot;:2025,&quot;month&quot;:6,&quot;notes&quot;:&quot;Placeholder review — this is where I&#39;d write my thoughts and takeaways from the book. Replace with your actual notes.&quot;},{&quot;title&quot;:&quot;Placeholder Book Two&quot;,&quot;author&quot;:&quot;Another Author&quot;,&quot;year&quot;:2025,&quot;month&quot;:8,&quot;notes&quot;:&quot;Placeholder review — another example of notes you might write after finishing a book.&quot;},{&quot;title&quot;:&quot;Placeholder Book Three&quot;,&quot;author&quot;:&quot;Yet Another Author&quot;,&quot;year&quot;:2025,&quot;month&quot;:10,&quot;notes&quot;:&quot;Placeholder review — third example to show how multiple books in the same year display.&quot;}];</script>
+</section>
+
   </main>
 
   <footer>
@@ -466,7 +496,115 @@
           marker.style.setProperty('--glow-delay', delay + 's');
         }
       });
+
+      initBooks();
     });
+
+    function initBooks() {
+      var books = booksData || [];
+      if (!books.length) return;
+
+      var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var grouped = {};
+      books.forEach(function(book) {
+        var key = book.year + '-' + book.month;
+        if (!grouped[key]) grouped[key] = { year: book.year, month: book.month, books: [] };
+        grouped[key].books.push(book);
+      });
+
+      var keys = Object.keys(grouped).sort();
+
+      var listEl = document.getElementById('booksList');
+      if (!listEl) return;
+
+      var html = '';
+      keys.forEach(function(key) {
+        var group = grouped[key];
+        html += '<div class="books-year">';
+        html += '<div class="books-year-title">' + group.year + '</div>';
+        html += '<div class="books-month" data-month="' + group.month + '">';
+        html += '<div class="books-month-header" onclick="toggleMonth(this)">';
+        html += '<span class="books-month-name">' + monthNames[group.month - 1] + '</span>';
+        html += '<span class="books-month-count">' + group.books.length + ' book' + (group.books.length > 1 ? 's' : '') + '</span>';
+        html += '<span class="books-month-toggle">▼</span>';
+        html += '</div>';
+        html += '<div class="books-month-details">';
+        group.books.forEach(function(book) {
+          html += '<div class="book-card">';
+          html += '<p class="book-title">' + book.title + '</p>';
+          html += '<p class="book-author">' + book.author + '</p>';
+          html += '<p class="book-notes">' + book.notes + '</p>';
+          html += '</div>';
+        });
+        html += '</div></div></div>';
+      });
+      listEl.innerHTML = html;
+
+      var chartEl = document.getElementById('booksChart');
+      if (!chartEl) return;
+
+      var yearCounts = {};
+      books.forEach(function(book) {
+        if (!yearCounts[book.year]) yearCounts[book.year] = new Array(12).fill(0);
+        yearCounts[book.year][book.month - 1]++;
+      });
+
+      var datasets = Object.keys(yearCounts).sort().map(function(year) {
+        return {
+          label: year,
+          data: yearCounts[year],
+          backgroundColor: 'rgba(255, 110, 199, 0.6)',
+          borderColor: '#FF6EC7',
+          borderWidth: 1
+        };
+      });
+
+      new Chart(chartEl, {
+        type: 'bar',
+        data: {
+          labels: monthNames,
+          datasets: datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            intersect: false,
+            mode: 'index'
+          },
+          plugins: {
+            legend: {
+              labels: { color: '#c9d1d9', font: { family: 'system-ui' } }
+            }
+          },
+          scales: {
+            x: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' } },
+            y: { beginAtZero: true, ticks: { color: '#8b949e', stepSize: 1 }, grid: { color: '#21262d' } }
+          },
+          onClick: function(e, elements) {
+            if (elements.length) {
+              var monthIdx = elements[0].index;
+              var monthNum = monthIdx + 1;
+              var monthEl = document.querySelector('.books-month[data-month="' + monthNum + '"]');
+              if (monthEl) {
+                monthEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                var details = monthEl.querySelector('.books-month-details');
+                var header = monthEl.querySelector('.books-month-header');
+                details.classList.add('open');
+                header.classList.add('expanded');
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function toggleMonth(header) {
+      var monthEl = header.parentElement;
+      var details = monthEl.querySelector('.books-month-details');
+      details.classList.toggle('open');
+      header.classList.toggle('expanded');
+    }
   </script>
 </body>
 </html>

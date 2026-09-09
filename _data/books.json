@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Placeholder Book One",
+    "author": "Author Name",
+    "year": 2025,
+    "month": 6,
+    "notes": "Placeholder review — this is where I'd write my thoughts and takeaways from the book. Replace with your actual notes."
+  },
+  {
+    "title": "Placeholder Book Two",
+    "author": "Another Author",
+    "year": 2025,
+    "month": 8,
+    "notes": "Placeholder review — another example of notes you might write after finishing a book."
+  },
+  {
+    "title": "Placeholder Book Three",
+    "author": "Yet Another Author",
+    "year": 2025,
+    "month": 10,
+    "notes": "Placeholder review — third example to show how multiple books in the same year display."
+  }
+]

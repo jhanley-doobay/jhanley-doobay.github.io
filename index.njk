@@ -48,3 +48,13 @@ github_url: "https://github.com/hanleyjames"
     {% endfor %}
   </div>
 </section>
+
+<!-- BOOKS SECTION -->
+<section id="books" class="section">
+  <h2>Books Read</h2>
+  <div class="chart-container">
+    <canvas id="booksChart"></canvas>
+  </div>
+  <div id="booksList"></div>
+  <script>const booksData = {{ books | tojson }};</script>
+</section>

@@ -4,4 +4,6 @@ module.exports = function(eleventyConfig) {
   });
 
   eleventyConfig.addPassthroughCopy({ "images": "images" });
+
+  eleventyConfig.addNunjucksFilter("tojson", (obj) => JSON.stringify(obj));
 };
