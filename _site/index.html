@@ -442,7 +442,7 @@
     <canvas id="booksChart"></canvas>
   </div>
   <div id="booksList"></div>
-  <script>const booksData = [{&quot;title&quot;:&quot;Placeholder Book One&quot;,&quot;author&quot;:&quot;Author Name&quot;,&quot;year&quot;:2025,&quot;month&quot;:6,&quot;notes&quot;:&quot;Placeholder review — this is where I&#39;d write my thoughts and takeaways from the book. Replace with your actual notes.&quot;},{&quot;title&quot;:&quot;Placeholder Book Two&quot;,&quot;author&quot;:&quot;Another Author&quot;,&quot;year&quot;:2025,&quot;month&quot;:8,&quot;notes&quot;:&quot;Placeholder review — another example of notes you might write after finishing a book.&quot;},{&quot;title&quot;:&quot;Placeholder Book Three&quot;,&quot;author&quot;:&quot;Yet Another Author&quot;,&quot;year&quot;:2025,&quot;month&quot;:10,&quot;notes&quot;:&quot;Placeholder review — third example to show how multiple books in the same year display.&quot;}];</script>
+  <script>var booksData = [{"title":"History of Political Philosophy","author":"Leo Strauss","year":2026,"month":3,"notes":"Placeholder review — this is where I'd write my thoughts and takeaways from the book. Replace with your actual notes."},{"title":"Placeholder Book Two","author":"Another Author","year":2025,"month":8,"notes":"Placeholder review — another example of notes you might write after finishing a book."},{"title":"Placeholder Book Three","author":"Yet Another Author","year":2025,"month":10,"notes":"Placeholder review — third example to show how multiple books in the same year display."}];</script>
 </section>
 
   </main>
@@ -501,7 +501,7 @@
     });
 
     function initBooks() {
-      var books = booksData || [];
+      var books = (typeof booksData !== 'undefined') ? booksData : [];
       if (!books.length) return;
 
       var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

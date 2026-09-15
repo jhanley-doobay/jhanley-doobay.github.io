@@ -56,5 +56,5 @@ github_url: "https://github.com/hanleyjames"
     <canvas id="booksChart"></canvas>
   </div>
   <div id="booksList"></div>
-  <script>const booksData = {{ books | tojson }};</script>
+  <script>var booksData = {{ books | tojson | safe }};</script>
 </section>

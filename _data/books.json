@@ -1,23 +1,114 @@
 [
   {
-    "title": "Placeholder Book One",
-    "author": "Author Name",
-    "year": 2025,
+    "title": "History of Political Philosophy",
+    "author": "Leo Strauss and Joseph Cropsey",
+    "year": 2026,
+    "month": 2,
+    "notes": "Primarily just read the first chapter. I was interested in the claim that the Republic was proto-communist. It's really well structured and a great read."
+  },
+  {
+    "title": "Philosophy and Real Politics",
+    "author": "Guess",
+    "year": 2026,
+    "month": 2,
+    "notes": "Interesting take on Kant and 'realpolitik'. I have not read anything in that regard since my old professor."
+  },
+  {
+    "title": "The Trial and Death Of Socrates",
+    "author": "Plato",
+    "year": 2026,
+    "month": 3,
+    "notes": "Always a fun read, have not looked into it since college. A really enjoyable rhetoric."
+  },
+    {
+    "title": "The Culture Struggle",
+    "author": "Parenti",
+    "year": 2026,
+    "month": 4,
+    "notes": "I have not read Parenti in years (RIP). I think his work was interesting as a short Marxist critique. There's lots to take away from this if you want a short read."
+  },
+    {
+    "title": "Antigone",
+    "author": "Sophocles",
+    "year": 2026,
+    "month": 4,
+    "notes": "A wonderful classic. I have not read this book since Prof. Kiel passed away in 2013. He was one of the few people who worked through this as an act of defiance and it's context."
+  },
+    {
+    "title": "Antigone",
+    "author": "Zizek",
+    "year": 2026,
+    "month": 4,
+    "notes": "A really goofy retelling. I do not know that I walked away processing anything beyond it."
+  },
+    {
+    "title": "Existentialism as a humanism",
+    "author": "Sartre",
+    "year": 2026,
+    "month": 4,
+    "notes": "I think what I enjoyed the most out of this book is embracing the weight of a choice or lack. The writing is light and the exchange at the end of the book is a wonderful antagonism between two systems."
+  },
+  {
+    "title": "A Bitter Trial: Evelyn Waugh and John Carmel Cardinal Heenan on Liturgical Changes",
+    "author": "Waugh and Heenan",
+    "year": 2026,
+    "month": 4,
+    "notes": "This book was really interesting to read. Short and brief, it contextualises the difference between taking church serious and what I feel has eventually become an overstimulation and aesthetic overdrive of church (Think megachurches down south)."
+  },
+  {
+    "title": "America",
+    "author": "Ronell",
+    "year": 2026,
+    "month": 4,
+    "notes": "My first book by Avita Ronell. I remember seeing her give an intro to Zizek multiple times and wanted to always read her works. I feel like I wasted my time. It feels more like poetry without aim rather than a critique. There's nowhere to go or grow with her work, and it feels like in part it's because of the structures she builds for herself."
+  },
+  {
+    "title": "The Society of the Spectacle",
+    "author": "Debord",
+    "year": 2026,
+    "month": 5,
+    "notes": "While I don't agree with some of it, and some of it comes across as lofty or poetic, I still enjoy this book. There's some line between Reality, Fiction and Ideology that it does a good job of pointing to. In the face of an increasingly online world choked by images and assumed meaning, this book is still worth re-evaluation."
+  },
+  {
+    "title": "Gyo",
+    "author": "Ito",
+    "year": 2026,
+    "month": 5,
+    "notes": "Wonderful retelling of ww2 era Japanese horror and social trauma. It does such a good job of painting body horror."
+  },
+  {
+    "title": "Haunted Houses",
+    "author": "Roberts",
+    "year": 2026,
     "month": 6,
-    "notes": "Placeholder review — this is where I'd write my thoughts and takeaways from the book. Replace with your actual notes."
+    "notes": "Fun stories around haunted houses in the US. A wonderful exchange and cool look into American history and folklore."
   },
   {
-    "title": "Placeholder Book Two",
-    "author": "Another Author",
-    "year": 2025,
+    "title": "Twilight of the Machines",
+    "author": "Zerzan",
+    "year": 2026,
+    "month": 6,
+    "notes": "Read this to my daughter at bedtime. She will only have one experience at presymbolic existance and I might as well lull her to sleep with what life could be like. It's a wonderful collection of Zerzan's works, and it makes me appreciate his consistency over the years."
+  },
+  {
+    "title": "Uzumeki",
+    "author": "Ito",
+    "year": 2026,
+    "month": 6,
+    "notes": "Wonderful. An amazing horror based around something that is mundane and nauseating. Body horror, folklore and a lack of closure. It is an amazing peak into social trauma and memetics in a way."
+  },
+  {
+    "title": "Smashed",
+    "author": "Ito",
+    "year": 2026,
+    "month": 6,
+    "notes": "The one that stuck with me most out of this collection was around the vampire which was a story about an eating disorder. It's such a wonderful exlporation of the morbid."
+  },
+  {
+    "title": "The Revolution of Everyday Life",
+    "author": "Vaneigem",
+    "year": 2026,
     "month": 8,
-    "notes": "Placeholder review — another example of notes you might write after finishing a book."
-  },
-  {
-    "title": "Placeholder Book Three",
-    "author": "Yet Another Author",
-    "year": 2025,
-    "month": 10,
-    "notes": "Placeholder review — third example to show how multiple books in the same year display."
+    "notes": "Amazing and great peak into Situationism. A beautiful experience re-thinking what life could potentially be like, and the mundaneness of everyday."
   }
 ]

@@ -188,7 +188,7 @@
     });
 
     function initBooks() {
-      var books = booksData || [];
+      var books = (typeof booksData !== 'undefined') ? booksData : [];
       if (!books.length) return;
 
       var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
