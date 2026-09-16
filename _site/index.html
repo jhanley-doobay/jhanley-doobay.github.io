@@ -87,8 +87,15 @@
     /* Books */
     .chart-container { position: relative; height: 250px; margin-bottom: 2rem; }
     .books-year { margin-bottom: 1.5rem; }
-    .books-year-title { font-size: 1.25rem; font-weight: 600; color: #f0f6fc; margin-bottom: 0.75rem; }
-    .books-month { margin-bottom: 0.75rem; }
+    .books-year-header { display: flex; align-items: center; padding: 0.75rem 1rem; background: #161b22; border: 1px solid #30363d; border-radius: 6px; cursor: pointer; gap: 0.75rem; transition: background 0.2s; }
+    .books-year-header:hover { background: #1c2128; }
+    .books-year-name { font-size: 1.25rem; font-weight: 600; color: #f0f6fc; }
+    .books-year-count { font-size: 0.85rem; color: #8b949e; }
+    .books-year-toggle { font-size: 0.7rem; color: #8b949e; margin-left: auto; transition: transform 0.3s; }
+    .books-year-header.expanded .books-year-toggle { transform: rotate(180deg); }
+    .books-year-details { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .books-year-details.open { max-height: 5000px; }
+    .books-month { margin-bottom: 0.75rem; padding-left: 1.5rem; }
     .books-month-header { display: flex; align-items: center; padding: 0.75rem 1rem; background: #161b22; border: 1px solid #30363d; border-radius: 6px; cursor: pointer; gap: 0.75rem; transition: background 0.2s; }
     .books-month-header:hover { background: #1c2128; }
     .books-month-name { font-weight: 600; color: #FF6EC7; }
@@ -442,7 +449,7 @@
     <canvas id="booksChart"></canvas>
   </div>
   <div id="booksList"></div>
-  <script>var booksData = [{"title":"History of Political Philosophy","author":"Leo Strauss","year":2026,"month":3,"notes":"Placeholder review — this is where I'd write my thoughts and takeaways from the book. Replace with your actual notes."},{"title":"Placeholder Book Two","author":"Another Author","year":2025,"month":8,"notes":"Placeholder review — another example of notes you might write after finishing a book."},{"title":"Placeholder Book Three","author":"Yet Another Author","year":2025,"month":10,"notes":"Placeholder review — third example to show how multiple books in the same year display."}];</script>
+  <script>var booksData = [{"title":"History of Political Philosophy","author":"Leo Strauss and Joseph Cropsey","year":2026,"month":2,"notes":"Primarily just read the first chapter. I was interested in the claim that the Republic was proto-communist. It's really well structured and a great read."},{"title":"Philosophy and Real Politics","author":"Guess","year":2026,"month":2,"notes":"Interesting take on Kant and 'realpolitik'. I have not read anything in that regard since my old professor."},{"title":"The Trial and Death Of Socrates","author":"Plato","year":2026,"month":3,"notes":"Always a fun read, have not looked into it since college. A really enjoyable rhetoric."},{"title":"The Culture Struggle","author":"Parenti","year":2026,"month":4,"notes":"I have not read Parenti in years (RIP). I think his work was interesting as a short Marxist critique. There's lots to take away from this if you want a short read."},{"title":"Antigone","author":"Sophocles","year":2026,"month":4,"notes":"A wonderful classic. I have not read this book since Prof. Kiel passed away in 2013. He was one of the few people who worked through this as an act of defiance and it's context."},{"title":"Antigone","author":"Zizek","year":2026,"month":4,"notes":"A really goofy retelling. I do not know that I walked away processing anything beyond it."},{"title":"Existentialism as a humanism","author":"Sartre","year":2026,"month":4,"notes":"I think what I enjoyed the most out of this book is embracing the weight of a choice or lack. The writing is light and the exchange at the end of the book is a wonderful antagonism between two systems."},{"title":"A Bitter Trial: Evelyn Waugh and John Carmel Cardinal Heenan on Liturgical Changes","author":"Waugh and Heenan","year":2026,"month":4,"notes":"This book was really interesting to read. Short and brief, it contextualises the difference between taking church serious and what I feel has eventually become an overstimulation and aesthetic overdrive of church (Think megachurches down south)."},{"title":"America","author":"Ronell","year":2026,"month":4,"notes":"My first book by Avita Ronell. I remember seeing her give an intro to Zizek multiple times and wanted to always read her works. I feel like I wasted my time. It feels more like poetry without aim rather than a critique. There's nowhere to go or grow with her work, and it feels like in part it's because of the structures she builds for herself."},{"title":"The Society of the Spectacle","author":"Debord","year":2026,"month":5,"notes":"While I don't agree with some of it, and some of it comes across as lofty or poetic, I still enjoy this book. There's some line between Reality, Fiction and Ideology that it does a good job of pointing to. In the face of an increasingly online world choked by images and assumed meaning, this book is still worth re-evaluation."},{"title":"Gyo","author":"Ito","year":2026,"month":5,"notes":"Wonderful retelling of ww2 era Japanese horror and social trauma. It does such a good job of painting body horror."},{"title":"Haunted Houses","author":"Roberts","year":2026,"month":6,"notes":"Fun stories around haunted houses in the US. A wonderful exchange and cool look into American history and folklore."},{"title":"Twilight of the Machines","author":"Zerzan","year":2026,"month":6,"notes":"Read this to my daughter at bedtime. She will only have one experience at presymbolic existance and I might as well lull her to sleep with what life could be like. It's a wonderful collection of Zerzan's works, and it makes me appreciate his consistency over the years."},{"title":"Uzumeki","author":"Ito","year":2026,"month":6,"notes":"Wonderful. An amazing horror based around something that is mundane and nauseating. Body horror, folklore and a lack of closure. It is an amazing peak into social trauma and memetics in a way."},{"title":"Smashed","author":"Ito","year":2026,"month":6,"notes":"The one that stuck with me most out of this collection was around the vampire which was a story about an eating disorder. It's such a wonderful exlporation of the morbid."},{"title":"The Revolution of Everyday Life","author":"Vaneigem","year":2026,"month":8,"notes":"Amazing and great peak into Situationism. A beautiful experience re-thinking what life could potentially be like, and the mundaneness of everyday."}];</script>
 </section>
 
   </main>
@@ -507,36 +514,45 @@
       var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       var grouped = {};
       books.forEach(function(book) {
-        var key = book.year + '-' + book.month;
-        if (!grouped[key]) grouped[key] = { year: book.year, month: book.month, books: [] };
-        grouped[key].books.push(book);
+        if (!grouped[book.year]) grouped[book.year] = {};
+        if (!grouped[book.year][book.month]) grouped[book.year][book.month] = [];
+        grouped[book.year][book.month].push(book);
       });
-
-      var keys = Object.keys(grouped).sort();
+      var years = Object.keys(grouped).sort();
 
       var listEl = document.getElementById('booksList');
       if (!listEl) return;
 
       var html = '';
-      keys.forEach(function(key) {
-        var group = grouped[key];
-        html += '<div class="books-year">';
-        html += '<div class="books-year-title">' + group.year + '</div>';
-        html += '<div class="books-month" data-month="' + group.month + '">';
-        html += '<div class="books-month-header" onclick="toggleMonth(this)">';
-        html += '<span class="books-month-name">' + monthNames[group.month - 1] + '</span>';
-        html += '<span class="books-month-count">' + group.books.length + ' book' + (group.books.length > 1 ? 's' : '') + '</span>';
-        html += '<span class="books-month-toggle">▼</span>';
+      years.forEach(function(year) {
+        var monthKeys = Object.keys(grouped[year]).sort();
+        var totalBooks = monthKeys.reduce(function(s, m) { return s + grouped[year][m].length; }, 0);
+        html += '<div class="books-year" data-year="' + year + '">';
+        html += '<div class="books-year-header" onclick="toggleYear(this)">';
+        html += '<span class="books-year-name">' + year + '</span>';
+        html += '<span class="books-year-count">' + totalBooks + ' book' + (totalBooks !== 1 ? 's' : '') + '</span>';
+        html += '<span class="books-year-toggle">▼</span>';
         html += '</div>';
-        html += '<div class="books-month-details">';
-        group.books.forEach(function(book) {
-          html += '<div class="book-card">';
-          html += '<p class="book-title">' + book.title + '</p>';
-          html += '<p class="book-author">' + book.author + '</p>';
-          html += '<p class="book-notes">' + book.notes + '</p>';
+        html += '<div class="books-year-details">';
+        monthKeys.forEach(function(month) {
+          var monthBooks = grouped[year][month];
+          html += '<div class="books-month" data-month="' + month + '">';
+          html += '<div class="books-month-header" onclick="toggleMonth(this)">';
+          html += '<span class="books-month-name">' + monthNames[month - 1] + '</span>';
+          html += '<span class="books-month-count">' + monthBooks.length + ' book' + (monthBooks.length > 1 ? 's' : '') + '</span>';
+          html += '<span class="books-month-toggle">▼</span>';
           html += '</div>';
+          html += '<div class="books-month-details">';
+          monthBooks.forEach(function(book) {
+            html += '<div class="book-card">';
+            html += '<p class="book-title">' + book.title + '</p>';
+            html += '<p class="book-author">' + book.author + '</p>';
+            html += '<p class="book-notes">' + book.notes + '</p>';
+            html += '</div>';
+          });
+          html += '</div></div>';
         });
-        html += '</div></div></div>';
+        html += '</div></div>';
       });
       listEl.innerHTML = html;
 
@@ -583,10 +599,18 @@
           },
           onClick: function(e, elements) {
             if (elements.length) {
+              var datasetIdx = elements[0].datasetIndex;
               var monthIdx = elements[0].index;
+              var year = datasets[datasetIdx].label;
               var monthNum = monthIdx + 1;
-              var monthEl = document.querySelector('.books-month[data-month="' + monthNum + '"]');
+              var selector = '.books-year[data-year="' + year + '] .books-month[data-month="' + monthNum + '"]';
+              var monthEl = document.querySelector(selector);
               if (monthEl) {
+                var yearEl = monthEl.parentElement.parentElement;
+                var yearDetails = yearEl.querySelector('.books-year-details');
+                var yearHeader = yearEl.querySelector('.books-year-header');
+                yearDetails.classList.add('open');
+                yearHeader.classList.add('expanded');
                 monthEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 var details = monthEl.querySelector('.books-month-details');
                 var header = monthEl.querySelector('.books-month-header');
@@ -597,6 +621,13 @@
           }
         }
       });
+    }
+
+    function toggleYear(header) {
+      var yearEl = header.parentElement;
+      var details = yearEl.querySelector('.books-year-details');
+      details.classList.toggle('open');
+      header.classList.toggle('expanded');
     }
 
     function toggleMonth(header) {

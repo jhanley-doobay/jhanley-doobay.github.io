@@ -87,8 +87,15 @@
     /* Books */
     .chart-container { position: relative; height: 250px; margin-bottom: 2rem; }
     .books-year { margin-bottom: 1.5rem; }
-    .books-year-title { font-size: 1.25rem; font-weight: 600; color: #f0f6fc; margin-bottom: 0.75rem; }
-    .books-month { margin-bottom: 0.75rem; }
+    .books-year-header { display: flex; align-items: center; padding: 0.75rem 1rem; background: #161b22; border: 1px solid #30363d; border-radius: 6px; cursor: pointer; gap: 0.75rem; transition: background 0.2s; }
+    .books-year-header:hover { background: #1c2128; }
+    .books-year-name { font-size: 1.25rem; font-weight: 600; color: #f0f6fc; }
+    .books-year-count { font-size: 0.85rem; color: #8b949e; }
+    .books-year-toggle { font-size: 0.7rem; color: #8b949e; margin-left: auto; transition: transform 0.3s; }
+    .books-year-header.expanded .books-year-toggle { transform: rotate(180deg); }
+    .books-year-details { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .books-year-details.open { max-height: 5000px; }
+    .books-month { margin-bottom: 0.75rem; padding-left: 1.5rem; }
     .books-month-header { display: flex; align-items: center; padding: 0.75rem 1rem; background: #161b22; border: 1px solid #30363d; border-radius: 6px; cursor: pointer; gap: 0.75rem; transition: background 0.2s; }
     .books-month-header:hover { background: #1c2128; }
     .books-month-name { font-weight: 600; color: #FF6EC7; }
@@ -194,36 +201,45 @@
       var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       var grouped = {};
       books.forEach(function(book) {
-        var key = book.year + '-' + book.month;
-        if (!grouped[key]) grouped[key] = { year: book.year, month: book.month, books: [] };
-        grouped[key].books.push(book);
+        if (!grouped[book.year]) grouped[book.year] = {};
+        if (!grouped[book.year][book.month]) grouped[book.year][book.month] = [];
+        grouped[book.year][book.month].push(book);
       });
-
-      var keys = Object.keys(grouped).sort();
+      var years = Object.keys(grouped).sort();
 
       var listEl = document.getElementById('booksList');
       if (!listEl) return;
 
       var html = '';
-      keys.forEach(function(key) {
-        var group = grouped[key];
-        html += '<div class="books-year">';
-        html += '<div class="books-year-title">' + group.year + '</div>';
-        html += '<div class="books-month" data-month="' + group.month + '">';
-        html += '<div class="books-month-header" onclick="toggleMonth(this)">';
-        html += '<span class="books-month-name">' + monthNames[group.month - 1] + '</span>';
-        html += '<span class="books-month-count">' + group.books.length + ' book' + (group.books.length > 1 ? 's' : '') + '</span>';
-        html += '<span class="books-month-toggle">▼</span>';
+      years.forEach(function(year) {
+        var monthKeys = Object.keys(grouped[year]).sort();
+        var totalBooks = monthKeys.reduce(function(s, m) { return s + grouped[year][m].length; }, 0);
+        html += '<div class="books-year" data-year="' + year + '">';
+        html += '<div class="books-year-header" onclick="toggleYear(this)">';
+        html += '<span class="books-year-name">' + year + '</span>';
+        html += '<span class="books-year-count">' + totalBooks + ' book' + (totalBooks !== 1 ? 's' : '') + '</span>';
+        html += '<span class="books-year-toggle">▼</span>';
         html += '</div>';
-        html += '<div class="books-month-details">';
-        group.books.forEach(function(book) {
-          html += '<div class="book-card">';
-          html += '<p class="book-title">' + book.title + '</p>';
-          html += '<p class="book-author">' + book.author + '</p>';
-          html += '<p class="book-notes">' + book.notes + '</p>';
+        html += '<div class="books-year-details">';
+        monthKeys.forEach(function(month) {
+          var monthBooks = grouped[year][month];
+          html += '<div class="books-month" data-month="' + month + '">';
+          html += '<div class="books-month-header" onclick="toggleMonth(this)">';
+          html += '<span class="books-month-name">' + monthNames[month - 1] + '</span>';
+          html += '<span class="books-month-count">' + monthBooks.length + ' book' + (monthBooks.length > 1 ? 's' : '') + '</span>';
+          html += '<span class="books-month-toggle">▼</span>';
           html += '</div>';
+          html += '<div class="books-month-details">';
+          monthBooks.forEach(function(book) {
+            html += '<div class="book-card">';
+            html += '<p class="book-title">' + book.title + '</p>';
+            html += '<p class="book-author">' + book.author + '</p>';
+            html += '<p class="book-notes">' + book.notes + '</p>';
+            html += '</div>';
+          });
+          html += '</div></div>';
         });
-        html += '</div></div></div>';
+        html += '</div></div>';
       });
       listEl.innerHTML = html;
 
@@ -270,10 +286,18 @@
           },
           onClick: function(e, elements) {
             if (elements.length) {
+              var datasetIdx = elements[0].datasetIndex;
               var monthIdx = elements[0].index;
+              var year = datasets[datasetIdx].label;
               var monthNum = monthIdx + 1;
-              var monthEl = document.querySelector('.books-month[data-month="' + monthNum + '"]');
+              var selector = '.books-year[data-year="' + year + '] .books-month[data-month="' + monthNum + '"]';
+              var monthEl = document.querySelector(selector);
               if (monthEl) {
+                var yearEl = monthEl.parentElement.parentElement;
+                var yearDetails = yearEl.querySelector('.books-year-details');
+                var yearHeader = yearEl.querySelector('.books-year-header');
+                yearDetails.classList.add('open');
+                yearHeader.classList.add('expanded');
                 monthEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 var details = monthEl.querySelector('.books-month-details');
                 var header = monthEl.querySelector('.books-month-header');
@@ -284,6 +308,13 @@
           }
         }
       });
+    }
+
+    function toggleYear(header) {
+      var yearEl = header.parentElement;
+      var details = yearEl.querySelector('.books-year-details');
+      details.classList.toggle('open');
+      header.classList.toggle('expanded');
     }
 
     function toggleMonth(header) {
