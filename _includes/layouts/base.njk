@@ -78,7 +78,7 @@
       75% { opacity: 0; }
       100% { opacity: 0; }
     }
-    .rain-splat { width: 30px; height: 20px; border-top: 4px dotted rgba(255, 110, 199, 0.7); border-radius: 50%; opacity: 1; transform: scale(0); animation: splat 0.5s linear infinite; }
+    .rain-splat { width: 30px; height: 20px; border-top: 8px dotted rgba(255, 110, 199, 0.7); border-radius: 50%; opacity: 1; transform: scale(0); animation: splat 0.5s linear infinite; }
     @keyframes splat {
       0% { opacity: 1; transform: scale(0); }
       80% { opacity: 1; transform: scale(0); }
@@ -162,6 +162,8 @@
       if (!container) return;
       container.innerHTML = '';
 
+      var neonColors = ['#FF6EC7', '#00FF99', '#00CCFF', '#FF3366', '#CCFF00', '#FF6600', '#9966FF'];
+
       var increment = 0;
       var drops = '';
 
@@ -172,7 +174,8 @@
         var bottomPos = randoFiver + randoFiver - 1 + 100;
         var delay = '0.' + randoHundo + 's';
         var duration = '0.5' + randoHundo + 's';
-        drops += '<div class="rain-drop" style="left:' + increment + '%;bottom:' + bottomPos + '%;animation-delay:' + delay + ';animation-duration:' + duration + ';"><div class="rain-stem" style="animation-delay:' + delay + ';animation-duration:' + duration + ';"></div><div class="rain-splat" style="animation-delay:' + delay + ';animation-duration:' + duration + ';"></div></div>';
+        var neonColor = neonColors[Math.floor(Math.random() * neonColors.length)];
+        drops += '<div class="rain-drop" style="left:' + increment + '%;bottom:' + bottomPos + '%;animation-delay:' + delay + ';animation-duration:' + duration + ';"><div class="rain-stem" style="animation-delay:' + delay + ';animation-duration:' + duration + ';"></div><div class="rain-splat" style="animation-delay:' + delay + ';animation-duration:' + duration + ';border-top-color:' + neonColor + ';"></div></div>';
       }
 
       container.innerHTML = drops;
