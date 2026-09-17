@@ -1,0 +1,21 @@
+---
+layout: layouts/base.njk
+title: "Blog"
+github_url: "https://github.com/hanleyjames"
+---
+
+<section class="section">
+  <h2>Blog</h2>
+  {% if collections.posts and collections.posts.length > 0 %}
+    {% for post in collections.posts %}
+    <div class="blog-entry">
+      <div class="blog-entry-header">
+        <a href="{{ post.url }}">{{ post.data.title }}</a>
+        <span class="blog-entry-date">{{ post.date | dateFormat }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p class="blog-empty">No posts yet. Check back soon!</p>
+  {% endif %}
+</section>

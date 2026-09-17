@@ -21,6 +21,15 @@
     .section { margin-bottom: 3rem; padding: 1.5rem; background: rgba(22, 27, 34, 0.65); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; position: relative; z-index: 1; }
     .section h2 { font-size: 1.75rem; margin-bottom: 1.5rem; color: #f0f6fc; border-bottom: 1px solid #30363d; padding-bottom: 0.5rem; }
 
+    /* Blog */
+    .blog-entry { padding: 1rem 0; border-bottom: 1px solid #30363d; }
+    .blog-entry:last-child { border-bottom: none; }
+    .blog-entry-header { display: flex; align-items: baseline; gap: 1rem; }
+    .blog-entry-header a { color: #58a6ff; text-decoration: none; font-size: 1.25rem; font-weight: 600; }
+    .blog-entry-header a:hover { text-decoration: underline; }
+    .blog-entry-date { font-size: 0.9rem; color: #8b949e; white-space: nowrap; }
+    .blog-empty { color: #8b949e; }
+
     /* About */
     .about-content { line-height: 1.7; }
     .about-name { font-size: 1.25rem; font-weight: 600; color: #f0f6fc; margin: 0; }
@@ -32,7 +41,7 @@
     .timeline { position: relative; padding-left: 2rem; }
     .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #30363d; }
     .timeline-item { position: relative; margin-bottom: 1.5rem; }
-    .timeline-marker { position: absolute; left: -2rem; top: 0.6rem; width: 14px; height: 14px; border-radius: 50%; background: #58a6ff; border: 2px solid #0d1117; margin-left: -6px; transform: translateX(1px); transition: background 0.3s, box-shadow 0.3s; }
+    .timeline-marker { position: absolute; left: -2.2rem; top: 0.6rem; width: 14px; height: 14px; border-radius: 50%; background: #58a6ff; border: 2px solid #0d1117; margin-left: -6px; transform: translateX(1px); transition: background 0.3s, box-shadow 0.3s; }
     .timeline-marker.active { background: #FF6EC7; animation: fireflyGlow var(--glow-duration, 2s) ease-in-out infinite var(--glow-delay, 0s); }
     .timeline-content { background: #161b22; border: 1px solid #30363d; border-radius: 6px; overflow: hidden; transition: box-shadow 0.3s; }
     .timeline-content:hover { animation: cardGlow var(--glow-duration, 2s) ease-in-out infinite var(--glow-delay, 0s); }
@@ -122,10 +131,10 @@
           <li><a href="#about">About</a></li>
           <li><a href="#cv">Experience</a></li>
           <li><a href="#books">Books</a></li>
-        {% elif collections.posts and collections.posts.length > 0 %}
-          {% for post in collections.posts | reverse %}
-            <li><a href="{{ post.url }}">{{ post.data.title or 'Untitled Post' }}</a></li>
-          {% endfor %}
+          <li><a href="/blog/">Blog</a></li>
+        {% elif page.url and "/blog" in page.url %}
+          <li><a href="/">Home</a></li>
+          <li><a href="/blog/">Blog</a></li>
         {% else %}
           <li><a href="/">Home</a></li>
         {% endif %}
