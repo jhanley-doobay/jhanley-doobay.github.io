@@ -7,9 +7,9 @@
     "url": "https://www.excellusbcbs.com",
     "logo": "images/cv/excellusbcbs_logo.jpeg",
     "accomplishments": [
-      "Led migration of legacy monolith to microservices, reducing deployment time by 70%",
-      "Mentored 4 junior developers through structured code review and pairing sessions",
-      "Designed and implemented real-time notification system serving 50k+ daily active users"
+      "Reduced vulnerabilities in legacy VB web application by 80% in a 3 month period",
+      "Reduce runtime of SSIS job from 9-12 hours, to 10 minutes",
+      "Implemented .Net spreadsheet management systems for SSIS, reducing daily error rates"
     ]
   },
     {
