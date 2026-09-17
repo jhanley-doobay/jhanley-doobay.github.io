@@ -10,8 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
   canvas.style.position = 'fixed';
   canvas.style.top = '0';
   canvas.style.left = '0';
-  canvas.style.zIndex = '-1';
 
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
   gl.viewport(0, 0, canvas.width, canvas.height);
 
   var vsSource = [
@@ -108,9 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
   var uTime = gl.getUniformLocation(program, 'u_time');
   var uRes = gl.getUniformLocation(program, 'u_resolution');
 
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
   var startTime = performance.now();
 
   function render() {
@@ -127,6 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('resize', function() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
     gl.viewport(0, 0, canvas.width, canvas.height);
   });
 });
