@@ -7,16 +7,18 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <style>
     /* Basic reset & layout */
-    body { margin: 0; font-family: system-ui, sans-serif; display: flex; flex-direction: column; min-height: 100vh; background-color: #0d1117; color: #c9d1d9; }
-    header { background: #1a1a1a; color: white; padding: 1rem; }
+    body { margin: 0; font-family: system-ui, sans-serif; display: flex; flex-direction: column; min-height: 100vh; background: transparent; color: #c9d1d9; position: relative; }
+    #vista-bg { opacity: 0; transition: opacity 1.5s ease-in; }
+    header { background: #1a1a1a; color: white; padding: 1rem; position: relative; z-index: 1; }
     header nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 1rem; }
     header nav a { color: #fff; text-decoration: none; font-weight: 500; }
     header nav a:hover { text-decoration: underline; }
-    main { flex: 1; padding: 2rem; max-width: 800px; margin: 0 auto; color: #c9d1d9; }
+    main { flex: 1; padding: 2rem; max-width: 800px; margin: 0 auto; color: #c9d1d9; position: relative; z-index: 1; }
+    footer { position: relative; z-index: 1; }
     footer a:hover { text-decoration: underline; }
 
     /* Sections */
-    .section { margin-bottom: 3rem; }
+    .section { margin-bottom: 3rem; padding: 1.5rem; background: rgba(22, 27, 34, 0.65); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; position: relative; z-index: 1; }
     .section h2 { font-size: 1.75rem; margin-bottom: 1.5rem; color: #f0f6fc; border-bottom: 1px solid #30363d; padding-bottom: 0.5rem; }
 
     /* About */
@@ -111,6 +113,7 @@
   </style>
 </head>
 <body>
+  <canvas id="vista-bg"></canvas>
   <header>
     <nav>
       <ul>
@@ -168,11 +171,11 @@
         <div class="timeline-details">
           <ul class="accomplishments">
             
-            <li>Led migration of legacy monolith to microservices, reducing deployment time by 70%</li>
+            <li>Reduced vulnerabilities in legacy VB web application by 80% in a 3 month period</li>
             
-            <li>Mentored 4 junior developers through structured code review and pairing sessions</li>
+            <li>Reduce runtime of SSIS job from 9-12 hours, to 10 minutes</li>
             
-            <li>Designed and implemented real-time notification system serving 50k+ daily active users</li>
+            <li>Implemented .Net spreadsheet management systems for SSIS, reducing daily error rates</li>
             
           </ul>
         </div>
@@ -637,5 +640,6 @@
       header.classList.toggle('expanded');
     }
   </script>
+  <script src="vista-bg.js"></script>
 </body>
 </html>
