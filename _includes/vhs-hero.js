@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', function() {
       'attribute vec2 a_pos;',
       'varying vec2 v_uv;',
       'void main() {',
-      '  v_uv = a_pos * 0.5 + 0.5;',
-      '  gl_Position = vec4(a_pos, 0.0, 1.0);',
+      '  v_uv = a_pos * 0.3 + 0.5;',
+      '  gl_Position = vec4(a_pos, 0.4, 0.95);',
       '}'
     ].join('\n');
 
@@ -69,11 +69,11 @@ document.addEventListener('DOMContentLoaded', function() {
       'uniform sampler2D u_texture;',
       'varying vec2 v_uv;',
       '',
-      '#define INTERLACING_SEVERITY 0.0005',
-      '#define TRACKING_HEIGHT 0.07',
-      '#define TRACKING_SEVERITY 0.025',
-      '#define TRACKING_SPEED 0.2',
-      '#define SHIMMER_SPEED 30.0',
+      '#define INTERLACING_SEVERITY 0.001',//0.0005
+      '#define TRACKING_HEIGHT 0.05',
+      '#define TRACKING_SEVERITY 0.1',//0.025
+      '#define TRACKING_SPEED 0.3',
+      '#define SHIMMER_SPEED 50.0',//30.0
       '#define RGB_MASK_SIZE 3.0',
       '',
       'void main() {',
