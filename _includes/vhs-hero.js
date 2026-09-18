@@ -14,35 +14,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var source = null;
   var isVideo = !!video;
+  var initialized = false;
 
   if (isVideo) {
     video.addEventListener('canplay', function onCanPlay() {
       video.removeEventListener('canplay', onCanPlay);
       source = video;
       video.playbackRate = 0.1;
-      resize();
+      requestAnimationFrame(resize);
     });
     if (video.readyState >= 3) {
       source = video;
       video.playbackRate = 0.1;
-      resize();
+      requestAnimationFrame(resize);
     }
   } else if (img) {
     var imgEl = new Image();
     imgEl.crossOrigin = 'anonymous';
     imgEl.onload = function() {
       source = imgEl;
-      resize();
+      requestAnimationFrame(resize);
     };
     imgEl.src = img.src;
   }
 
   function resize() {
     var rect = heroContainer.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
+    if (rect.width === 0 || rect.height === 0) return;
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.width = Math.round(rect.width);
+    canvas.height = Math.round(rect.height);
     gl.viewport(0, 0, canvas.width, canvas.height);
-    if (source) init();
+    if (source && !initialized) {
+      initialized = true;
+      init();
+    }
   }
 
   function init() {
@@ -170,8 +177,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('resize', function() {
       var rect = heroContainer.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      if (rect.width === 0 || rect.height === 0) return;
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.width = Math.round(rect.width);
+      canvas.height = Math.round(rect.height);
       gl.viewport(0, 0, canvas.width, canvas.height);
     });
 });

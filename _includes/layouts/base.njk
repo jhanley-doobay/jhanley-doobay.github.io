@@ -73,7 +73,7 @@
     /* Hero Rain */
     .hero-container { position: relative; overflow: hidden; width: 100vw; margin-left: calc(-50vw + 50%); }
     .hero-video { width: 100%; height: 400px; object-fit: cover; display: block; }
-    .vhs-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+    .vhs-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
     .rain-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
     .rain-drop { position: absolute; bottom: 100%; width: 30px; height: 140px; pointer-events: none; animation: drop 0.5s linear infinite; }
     @keyframes drop {
@@ -81,18 +81,18 @@
       75% { transform: translateY(400px); }
       100% { transform: translateY(400px); }
     }
-    .rain-stem { width: 5px; height: 60%; margin-left: 12px; background: linear-gradient(to bottom, rgba(255, 110, 199, 0), rgba(255, 110, 199, 0.45)); animation: stem 0.5s linear infinite; }
+    .rain-stem { width: 5px; height: 60%; margin-left: 12px; background: linear-gradient(to bottom, transparent, rgba(255, 110, 199, 1); animation: stem 0.5s linear infinite; }
     @keyframes stem {
       0% { opacity: 1; }
       65% { opacity: 1; }
       75% { opacity: 0; }
       100% { opacity: 0; }
     }
-    .rain-splat { width: 30px; height: 20px; border-top: 8px dotted rgba(255, 110, 199, 0.7); border-radius: 50%; opacity: 1; transform: scale(0); animation: splat 0.5s linear infinite; }
+    .rain-splat { width: 30px; height: 20px; border-top: 8px dotted rgba(255, 110, 199, 1); border-radius: 50%; opacity: 1; transform: scale(0); animation: splat 0.5s linear infinite; }
     @keyframes splat {
       0% { opacity: 1; transform: scale(0); }
       80% { opacity: 1; transform: scale(0); }
-      90% { opacity: 0.5; transform: scale(1); }
+      90% { opacity: 0.8; transform: scale(1); }
       100% { opacity: 0; transform: scale(1.5); }
     }
 
@@ -189,7 +189,7 @@
         var delay = '0.' + randoHundo + 's';
         var duration = '0.5' + randoHundo + 's';
         var neonColor = neonColors[Math.floor(Math.random() * neonColors.length)];
-        drops += '<div class="rain-drop" style="left:' + increment + '%;bottom:' + bottomPos + '%;animation-delay:' + delay + ';animation-duration:' + duration + ';"><div class="rain-stem" style="animation-delay:' + delay + ';animation-duration:' + duration + ';"></div><div class="rain-splat" style="animation-delay:' + delay + ';animation-duration:' + duration + ';border-top-color:' + neonColor + ';"></div></div>';
+        drops += '<div class="rain-drop" style="left:' + increment + '%;bottom:' + bottomPos + '%;animation-delay:' + delay + ';animation-duration:' + duration + ';"><div class="rain-stem" style="animation-delay:' + delay + ';animation-duration:' + duration + ';background:linear-gradient(to bottom, transparent, ' + neonColor + ');"></div><div class="rain-splat" style="animation-delay:' + delay + ';animation-duration:' + duration + ';border-top-color:' + neonColor + ';"></div></div>';
       }
 
       container.innerHTML = drops;
