@@ -72,7 +72,8 @@
 
     /* Hero Rain */
     .hero-container { position: relative; overflow: hidden; width: 100vw; margin-left: calc(-50vw + 50%); }
-    .hero-container img { width: 100%; height: 400px; object-fit: cover; display: block; }
+    .hero-video { width: 100%; height: 400px; object-fit: cover; display: block; }
+    .vhs-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
     .rain-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
     .rain-drop { position: absolute; bottom: 100%; width: 30px; height: 140px; pointer-events: none; animation: drop 0.5s linear infinite; }
     @keyframes drop {
@@ -145,10 +146,14 @@
   <main>
     {% if page.url == "/" %}
     <div class="hero-container">
-      <img src="images/header.jpg" alt="Header" />
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="images/video/swag.mp4" type="video/mp4" />
+        <img src="images/header.jpg" alt="Header" />
+      </video>
       <div class="rain-container"></div>
     </div>
     <h1>{{ title }}</h1>
+    <script src="/vhs-hero.js"></script>
     {% endif %}
     {{ content | safe }}
   </main>

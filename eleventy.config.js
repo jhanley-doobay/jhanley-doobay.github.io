@@ -14,7 +14,9 @@ module.exports = function(eleventyConfig) {
   });
 
   eleventyConfig.addPassthroughCopy({ "images": "images" });
+  eleventyConfig.addPassthroughCopy({ "images/video": "images/video" });
   eleventyConfig.addPassthroughCopy({ "_includes/vista-bg.js": "vista-bg.js" });
+  eleventyConfig.addPassthroughCopy({ "_includes/vhs-hero.js": "vhs-hero.js" });
 
   eleventyConfig.addNunjucksFilter("tojson", (obj) => JSON.stringify(obj));
 };
